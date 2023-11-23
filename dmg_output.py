@@ -1,5 +1,8 @@
 #!/bin/python3
 import csv
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.interpolate import make_interp_spline
 
 
 def calculate_probability():
@@ -35,3 +38,22 @@ with open('p.csv', 'w', newline='\n') as f:
 for total_sum, probability in result.items():
     print(
         f"The probability of getting a sum of {total_sum} is: {probability:.4f}")
+
+dmg = 6   # Glommus has +6 on dmg roll
+atks = 8  # Glommus has 8 attacks
+
+damage_outputs = [(amount + dmg) * atks for amount in result.keys()]
+probabilities = list(result.values())
+
+x_smooth = np.linspace(min(damage_outputs), max(damage_outputs), 300)
+y_smooth = make_interp_spline(damage_outputs, probabilities)(x_smooth)
+
+plt.plot(x_smooth, y_smooth, label="Glommus' Damage Output")
+plt.scatter(damage_outputs, probabilities, color='red', label='Data Points')
+
+plt.xlabel('Total Dmg')
+plt.ylabel('Probability')
+plt.title("Glommus' Damage Output distribution")
+
+plt.legend()
+plt.savefig('glommus.png')
