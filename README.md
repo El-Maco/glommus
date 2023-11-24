@@ -49,6 +49,10 @@ With an additional `+6` to the dmg roll the dmg output would look like
 |  11  |  17  |  136 |  0.0802  |
 |  12  |  18  |  144 |  0.0401  |
 
+![Damage Output](glommus.png)
+
+(Don't know why the middle of the peak looks that weird :sweat_smile:)
+
 # Example opponent
 
 Let's imagine a feasible opponent at lvl 10:
