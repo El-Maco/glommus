@@ -14,7 +14,9 @@
 - 1 Attacks per Attack Action from 'Unleash Incarnation'
 - 3 Attacks per Attack Action from 'Extra Attack'
 
-In Total 8 Attacks with Greatsword 2d6 and the feat 'Great Weapon Fighting':
+In Total 8 Attacks with Greatsword `2d6` and the feat 'Great Weapon Fighting' (re-roll 1 and 2 once).
+
+Dice roll probabilities:
 
 | tot  |    P     |
 |:---: |:--------:|
@@ -30,7 +32,7 @@ In Total 8 Attacks with Greatsword 2d6 and the feat 'Great Weapon Fighting':
 |  11  |  0.0802  |
 |  12  |  0.0401  |
 
-With an additional +6 to the dmg roll the dmg output would look like
+With an additional `+6` to the dmg roll the dmg output would look like
 (with the assumption that every attack hits)
 
 | tot  | dmg  |  x8  |    P     |
@@ -46,4 +48,19 @@ With an additional +6 to the dmg roll the dmg output would look like
 |  10  |  16  |  128 |  0.1203  |
 |  11  |  17  |  136 |  0.0802  |
 |  12  |  18  |  144 |  0.0401  |
+
+# Example opponent
+
+Let's imagine a feasible opponent at lvl 10:
+
+|  AC  |  HP  |
+|:----:|:----:|
+|  17  |  69  |
+
+With `+10` on Attack Rolls it would require $>6$ on the `1d20` roll, giving a $\frac{14}{20}=0,7$ chance of hitting.
+Let's round to the closes datapoint (72), which would give an instakill chance of $\sum_{P_{dmg>72}} \times 0,7 = 0,9784 \times 0,7 = 0,6849$.
+
+|  AC  |  HP  | DthCh |
+|:----:|:----:|:-----:|
+|  17  |  69  |  >68% |
 
