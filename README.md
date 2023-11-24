@@ -52,6 +52,9 @@ With an additional `+6` to the dmg roll the dmg output would look like
 # Example opponent
 
 Let's imagine a feasible opponent at lvl 10:
+<p align="left">
+    <img src="feasible_opponent.jpg" alt="Zalaia" width="300">
+</p>
 
 |  AC  |  HP  |
 |:----:|:----:|
