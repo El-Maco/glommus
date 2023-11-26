@@ -1,8 +1,15 @@
 #!/bin/python3
 import csv
+from itertools import product
+from matplotlib.font_manager import json
 import matplotlib.pyplot as plt
+import math
+import os
+import time
 import numpy as np
-from scipy.interpolate import make_interp_spline
+
+dmg = 6   # Glommus has +6 on dmg roll
+atks = 8  # Glommus has 8 attacks
 
 
 def calculate_probability():
@@ -39,17 +46,47 @@ for total_sum, probability in result.items():
     print(
         f"The probability of getting a sum of {total_sum} is: {probability:.4f}")
 
-dmg = 6   # Glommus has +6 on dmg roll
-atks = 8  # Glommus has 8 attacks
-
-damage_outputs = [(amount + dmg) * atks for amount in result.keys()]
+all_rolls = [int(roll) for roll in result.keys()]
 probabilities = list(result.values())
 
-x_smooth = np.linspace(min(damage_outputs), max(damage_outputs), 300)
-y_smooth = make_interp_spline(damage_outputs, probabilities)(x_smooth)
+dmg_dist_file = "damage_distribution.json"
+dmg_distribution = {}
 
-plt.plot(x_smooth, y_smooth, label="Glommus' Damage Output")
-plt.scatter(damage_outputs, probabilities, color='red', label='Data Points')
+
+def process_combination(combination, i=0):
+    combination_dmg = sum(combination) + len(combination)*dmg
+    curr_prob = math.prod(result[roll] for roll in combination)
+
+    if combination_dmg not in dmg_distribution:
+        dmg_distribution[combination_dmg] = curr_prob
+    else:
+        dmg_distribution[combination_dmg] += curr_prob
+    if not i % 1e6:
+        print(combination, curr_prob, f"{100*(i/11**8):.2f}%")
+
+
+if os.path.isfile(dmg_dist_file):
+    with open(dmg_dist_file, 'r') as f:
+        dmg_distribution = json.load(f)
+else:
+    start_time = time.time()
+    for i, combination in enumerate(product(all_rolls, repeat=8)):
+        process_combination(combination, i)
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print("Execution time:", elapsed_time, "seconds")
+
+
+with open(dmg_dist_file, 'w') as f:
+    json.dump(dmg_distribution, f)
+
+dmg_outputs = [int(d) for d in dmg_distribution.keys()]
+dmg_probs = list(dmg_distribution.values())
+
+plt.plot(dmg_outputs, dmg_probs,
+         label="Glommus' Damage Output")
+plt.scatter(dmg_outputs, dmg_probs,
+            color='red', label='Data Points')
 
 plt.xlabel('Total Dmg')
 plt.ylabel('Probability')
