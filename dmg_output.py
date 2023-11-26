@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import math
 import os
 import time
-import numpy as np
 
 dmg = 6   # Glommus has +6 on dmg roll
 atks = 8  # Glommus has 8 attacks
@@ -76,6 +75,16 @@ else:
     elapsed_time = end_time - start_time
     print("Execution time:", elapsed_time, "seconds")
 
+exampleAC = 17
+exampleHP = 69
+atk_mod = 10
+p_miss = (exampleAC - atk_mod - 1) / 20
+p_hit = 1 - p_miss
+p_kill = sum([prob for dmg, prob in dmg_distribution.items() if int(dmg) >= exampleHP])
+print(f"Example opponent AC: {exampleAC} HP: {exampleHP}")
+print(f"If all Attacks hit, it would kill with the probability ~{p_kill*100:.2f}%")
+print(f"With +{atk_mod} on Attack Rolls hits with p={p_hit*100:.2f}%")
+print(f"Giving the final probability of killing the opponent: {p_kill*p_hit*100:.2f}%")
 
 with open(dmg_dist_file, 'w') as f:
     json.dump(dmg_distribution, f)

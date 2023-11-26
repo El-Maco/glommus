@@ -49,9 +49,9 @@ With an additional `+6` to the dmg roll the dmg output would look like
 |  11  |  17  |  136 |  0.0802  |
 |  12  |  18  |  144 |  0.0401  |
 
-![Damage Output](glommus.png)
+After iterating all possible Damage Rolls with 8 Attacks, the resulting probability graph shows the damage probability distribution. The graph data can be found in `damage_distribution.json`.
 
-(Don't know why the middle of the peak looks that weird :sweat_smile:)
+![Damage Output](glommus.png)
 
 # Example opponent
 
@@ -64,10 +64,13 @@ Let's imagine a feasible opponent at lvl 10:
 |:----:|:----:|
 |  17  |  69  |
 
-With `+10` on Attack Rolls it would require $>6$ on the `1d20` roll, giving a $\frac{14}{20}=0,7$ chance of hitting.
-Let's round to the closes datapoint (72), which would give an instakill chance of $\sum_{P_{dmg>72}} \times 0,7 = 0,9784 \times 0,7 = 0,6849$.
+With `+10` on Attack Rolls it would require $>=7$ on the `1d20` roll, giving a $\frac{14}{20}=0,7$ chance of hitting.
+Based on the probabilities from the graph (and `damage_distribution.json`), with 8 attacks Glommus can deal above `69` damage with a certainty of `~100.00% (99.9999999)`, leaving the probability of killing the opponent solely to the Attack Rolls.
+
+With `+10` on Attack Rolls hits with `p=70.00%`.
+Giving the final probability of killing the opponent: `70.00%`.
 
 |  AC  |  HP  | DthCh |
 |:----:|:----:|:-----:|
-|  17  |  69  |  >68% |
+|  17  |  69  |  >70% |
 
